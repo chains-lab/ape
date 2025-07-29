@@ -1,4 +1,4 @@
-module github.com/chains-lab/ape
+module github.com/chains-lab/apperr
 
 go 1.24.4
 
