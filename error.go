@@ -7,6 +7,16 @@ import (
 	"google.golang.org/protobuf/protoadapt"
 )
 
+func NewError(cause error, reason, message string, code codes.Code, details ...protoadapt.MessageV1) *ErrorObject {
+	return &ErrorObject{
+		code:    code,
+		reason:  reason,
+		message: message,
+		cause:   cause,
+		details: details,
+	}
+}
+
 type ErrorObject struct {
 	code    codes.Code
 	reason  string
