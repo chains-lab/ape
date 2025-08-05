@@ -3,8 +3,8 @@ package ape
 import "errors"
 
 type AppError struct {
-	//code of error, should be unique for each error type
-	// in upercase, e.g. "USER_IS_NOT_ADMIN"
+	// code of error, should be unique for each error type
+	// in uppercase, e.g. "USER_IS_NOT_ADMIN"
 	code string
 
 	//internal reason for the error, should not be used in user messages
