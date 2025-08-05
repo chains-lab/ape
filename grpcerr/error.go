@@ -1,4 +1,4 @@
-package apperr
+package grpcerr
 
 import (
 	"errors"
@@ -7,10 +7,7 @@ import (
 	"google.golang.org/protobuf/protoadapt"
 )
 
-type ErrorObject struct {
-	// Cause internal error search for which an error occurred
-	Cause error
-
+type ErrorMessage struct {
 	// Reason is a unique identifier for the error type
 	Reason string
 
@@ -25,16 +22,12 @@ type ErrorObject struct {
 	Details []protoadapt.MessageV1
 }
 
-func (e *ErrorObject) Error() string {
+func (e *ErrorMessage) Error() string {
 	return e.Message
 }
 
-func (e *ErrorObject) Unwrap() error {
-	return e.Cause
-}
-
-func (e *ErrorObject) Is(target error) bool {
-	var be *ErrorObject
+func (e *ErrorMessage) Is(target error) bool {
+	var be *ErrorMessage
 	if errors.As(target, &be) {
 		return e.Reason == be.Reason
 	}

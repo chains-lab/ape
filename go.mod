@@ -1,4 +1,4 @@
-module github.com/chains-lab/apperr
+module github.com/chains-lab/svc-errors
 
 go 1.24.4
 
