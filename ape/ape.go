@@ -35,3 +35,11 @@ func Declare(id string) *Error {
 		id: id,
 	}
 }
+
+func (e *Error) Raise(cause error, response *status.Status) *Error {
+	return &Error{
+		id:       e.id,
+		Cause:    cause,
+		Response: response,
+	}
+}
