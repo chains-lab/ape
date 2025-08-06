@@ -1,44 +1,37 @@
 package ape
 
-import "errors"
+import (
+	"errors"
 
-type AppError struct {
-	// code of error, should be unique for each error type
-	// in uppercase, e.g. "USER_IS_NOT_ADMIN"
-	code string
+	"google.golang.org/grpc/status"
+)
 
-	//internal reason for the error, should not be used in user messages
-	cause error
+type Error struct {
+	// id unique error identifier
+	// in uppercase format like "ADMIN_CAN_NOT_DELETE_SELF"
+	id string
+
+	// internal error which caused this error
+	Cause error
+
+	//Response error
+	Response *status.Status
 }
 
-func (e *AppError) Error() string {
-	return e.code
+func (e *Error) Error() string {
+	return e.id
 }
 
-func (e *AppError) Unwrap() error {
-	if e.cause != nil {
-		return e.cause
-	}
-	return nil
-}
-
-func (e *AppError) Is(target error) bool {
-	var be *AppError
+func (e *Error) Is(target error) bool {
+	var be *Error
 	if errors.As(target, &be) {
-		return e.code == be.code
+		return e.id == be.id
 	}
 	return false
 }
 
-func Create(code string) *AppError {
-	return &AppError{
-		code: code,
-	}
-}
-
-func Raise(code string, cause error) *AppError {
-	return &AppError{
-		code:  code,
-		cause: cause,
+func Declare(id string) *Error {
+	return &Error{
+		id: id,
 	}
 }
