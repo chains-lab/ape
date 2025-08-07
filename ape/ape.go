@@ -7,9 +7,9 @@ import (
 )
 
 type Error struct {
-	// id unique error identifier
+	// ID unique error identifier
 	// in uppercase format like "ADMIN_CAN_NOT_DELETE_SELF"
-	id string
+	ID string
 
 	// internal error which caused this error
 	Cause error
@@ -19,27 +19,46 @@ type Error struct {
 }
 
 func (e *Error) Error() string {
-	return e.id
+	return e.ID
+}
+
+func (e *Error) Unwrap() error {
+	if e.Cause != nil {
+		return e.Cause
+	}
+	return nil
 }
 
 func (e *Error) Is(target error) bool {
 	var be *Error
 	if errors.As(target, &be) {
-		return e.id == be.id
+		return e.ID == be.ID
 	}
 	return false
 }
 
-func Declare(id string) *Error {
+func (e *Error) Raise(cause error, response *status.Status) error {
 	return &Error{
-		id: id,
-	}
-}
-
-func (e *Error) Raise(cause error, response *status.Status) *Error {
-	return &Error{
-		id:       e.id,
+		ID:       e.ID,
 		Cause:    cause,
 		Response: response,
 	}
+}
+
+func (e *Error) GRPCStatus() *status.Status {
+	return e.Response
+}
+
+func Declare(ID string) *Error {
+	return &Error{
+		ID: ID,
+	}
+}
+
+func Unwrap(err error) *Error {
+	var e *Error
+	if errors.As(err, &e) {
+		return e
+	}
+	return nil
 }
