@@ -21,7 +21,7 @@ func Render(w http.ResponseWriter, status int, res interface{}) {
 	panic(fmt.Errorf("failed to render response %w", err))
 }
 
-func RenderErr(w http.ResponseWriter, errs ...error) {
+func RenderErr(w http.ResponseWriter, errs ...*jsonapi.ErrorObject) {
 	if len(errs) == 0 {
 		panic("expected non-empty errors slice")
 	}
