@@ -8,14 +8,13 @@ import (
 	"github.com/google/jsonapi"
 )
 
-func Conflict(details, requestID string) *jsonapi.ErrorObject {
+func Conflict(details string) *jsonapi.ErrorObject {
 	return &jsonapi.ErrorObject{
 		Title:  http.StatusText(http.StatusConflict),
 		Status: fmt.Sprintf("%d", http.StatusConflict),
 		Detail: details,
 		Meta: &map[string]any{
-			"timestamp":  time.Now().UTC(),
-			"request_id": requestID,
+			"timestamp": time.Now().UTC(),
 		},
 	}
 }

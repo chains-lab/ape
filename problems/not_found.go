@@ -8,14 +8,13 @@ import (
 	"github.com/google/jsonapi"
 )
 
-func NotFound(details, requestID string) *jsonapi.ErrorObject {
+func NotFound(details string) *jsonapi.ErrorObject {
 	return &jsonapi.ErrorObject{
 		Title:  http.StatusText(http.StatusNotFound),
 		Status: fmt.Sprintf("%d", http.StatusNotFound),
 		Detail: details,
 		Meta: &map[string]interface{}{
-			"timestamp":  time.Now().UTC(),
-			"request_id": requestID,
+			"timestamp": time.Now().UTC(),
 		},
 	}
 }

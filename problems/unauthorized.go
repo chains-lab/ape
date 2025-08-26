@@ -8,14 +8,13 @@ import (
 	"github.com/google/jsonapi"
 )
 
-func Unauthorized(details, requestID string) *jsonapi.ErrorObject {
+func Unauthorized(details string) *jsonapi.ErrorObject {
 	return &jsonapi.ErrorObject{
 		Title:  http.StatusText(http.StatusUnauthorized),
 		Status: fmt.Sprintf("%d", http.StatusUnauthorized),
 		Detail: details,
 		Meta: &map[string]interface{}{
-			"timestamp":  time.Now().UTC(),
-			"request_id": requestID,
+			"timestamp": time.Now().UTC(),
 		},
 	}
 }

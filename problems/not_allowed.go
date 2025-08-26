@@ -31,7 +31,7 @@ func isForbidden(err error) bool {
 }
 
 // NotAllowed will try to guess details of error and populate problem accordingly.
-func NotAllowed(details, requestID string, errs ...error) *jsonapi.ErrorObject {
+func NotAllowed(details string, errs ...error) *jsonapi.ErrorObject {
 	// errs is optional for backward compatibility
 	if len(errs) == 0 {
 		return &jsonapi.ErrorObject{
@@ -52,9 +52,8 @@ func NotAllowed(details, requestID string, errs ...error) *jsonapi.ErrorObject {
 			Status: fmt.Sprintf("%d", http.StatusBadRequest),
 			Detail: details,
 			Meta: &map[string]interface{}{
-				"reason":     cause.Error(),
-				"timestamp":  time.Now().UTC(),
-				"request_id": requestID,
+				"reason":    cause.Error(),
+				"timestamp": time.Now().UTC(),
 			},
 		}
 	case isNotAllowed(cause):
@@ -63,8 +62,7 @@ func NotAllowed(details, requestID string, errs ...error) *jsonapi.ErrorObject {
 			Status: fmt.Sprintf("%d", http.StatusUnauthorized),
 			Detail: details,
 			Meta: &map[string]interface{}{
-				"timestamp":  time.Now().UTC(),
-				"request_id": requestID,
+				"timestamp": time.Now().UTC(),
 			},
 		}
 	case isForbidden(cause):
@@ -74,8 +72,7 @@ func NotAllowed(details, requestID string, errs ...error) *jsonapi.ErrorObject {
 				Status: fmt.Sprintf("%d", http.StatusForbidden),
 				Detail: details,
 				Meta: &map[string]interface{}{
-					"timestamp":  time.Now().UTC(),
-					"request_id": requestID,
+					"timestamp": time.Now().UTC(),
 				},
 			}
 		}
@@ -85,8 +82,7 @@ func NotAllowed(details, requestID string, errs ...error) *jsonapi.ErrorObject {
 			Status: fmt.Sprintf("%d", http.StatusInternalServerError),
 			Detail: details,
 			Meta: &map[string]interface{}{
-				"timestamp":  time.Now().UTC(),
-				"request_id": requestID,
+				"timestamp": time.Now().UTC(),
 			},
 		}
 	}
