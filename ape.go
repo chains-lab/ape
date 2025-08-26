@@ -13,9 +13,6 @@ type Error struct {
 
 	// internal error which caused this error
 	Cause error
-
-	//Response error
-	Response *jsonapi.ErrorObject
 }
 
 func (e *Error) Error() string {
@@ -39,15 +36,9 @@ func (e *Error) Is(target error) bool {
 
 func (e *Error) Raise(cause error, response *jsonapi.ErrorObject) error {
 	return &Error{
-		ID:       e.ID,
-		Cause:    cause,
-		Response: response,
+		ID:    e.ID,
+		Cause: cause,
 	}
-}
-
-// JSONAPIError returns the JSONAPI error object associated with this error.
-func (e *Error) JSONAPIError() *jsonapi.ErrorObject {
-	return e.Response
 }
 
 func Declare(ID string) *Error {

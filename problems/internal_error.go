@@ -8,11 +8,13 @@ import (
 	"github.com/google/jsonapi"
 )
 
-func InternalError(details string) *jsonapi.ErrorObject {
+func InternalError() *jsonapi.ErrorObject {
 	return &jsonapi.ErrorObject{
 		Title:  http.StatusText(http.StatusInternalServerError),
 		Status: fmt.Sprintf("%d", http.StatusInternalServerError),
-		Detail: details,
+		Detail: "Oops, an unexpected error has occurred." +
+			" We are already looking into it and doing everything we can to ensure that you don't see it again." +
+			" Please come back soon.",
 		Meta: &map[string]any{
 			"timestamp": time.Now().UTC(),
 		},

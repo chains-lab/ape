@@ -37,12 +37,6 @@ func RenderErr(w http.ResponseWriter, errs ...error) {
 			objs = append(objs, jo)
 			continue
 		}
-
-		var ae *Error
-		if errors.As(e, &ae) && ae != nil && ae.JSONAPIError() != nil {
-			objs = append(objs, ae.JSONAPIError())
-			continue
-		}
 	}
 
 	if len(objs) == 0 {
