@@ -38,7 +38,7 @@ func (e *Error) Raise(cause error) error {
 	}
 }
 
-func Declare(ID string) *Error {
+func DeclareError(ID string) *Error {
 	return &Error{
 		ID: ID,
 	}

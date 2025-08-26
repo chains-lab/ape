@@ -12,8 +12,9 @@ import (
 	"github.com/google/jsonapi"
 )
 
-func Render(w http.ResponseWriter, res interface{}) {
+func Render(w http.ResponseWriter, status int, res interface{}) {
 	w.Header().Set("content-type", jsonapi.MediaType)
+	w.WriteHeader(status)
 	err := json.NewEncoder(w).Encode(res)
 	if err != nil {
 	}
