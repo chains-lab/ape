@@ -3,7 +3,7 @@ package ape
 import (
 	"errors"
 
-	"google.golang.org/grpc/status"
+	"github.com/google/jsonapi"
 )
 
 type Error struct {
@@ -15,7 +15,7 @@ type Error struct {
 	Cause error
 
 	//Response error
-	Response *status.Status
+	Response *jsonapi.ErrorObject
 }
 
 func (e *Error) Error() string {
@@ -37,7 +37,7 @@ func (e *Error) Is(target error) bool {
 	return false
 }
 
-func (e *Error) Raise(cause error, response *status.Status) error {
+func (e *Error) Raise(cause error, response *jsonapi.ErrorObject) error {
 	return &Error{
 		ID:       e.ID,
 		Cause:    cause,
@@ -45,7 +45,7 @@ func (e *Error) Raise(cause error, response *status.Status) error {
 	}
 }
 
-func (e *Error) GRPCStatus() *status.Status {
+func (e *Error) JSONAPIError() *jsonapi.ErrorObject {
 	return e.Response
 }
 
