@@ -2,8 +2,6 @@ package ape
 
 import (
 	"errors"
-
-	"github.com/google/jsonapi"
 )
 
 type Error struct {
@@ -34,7 +32,7 @@ func (e *Error) Is(target error) bool {
 	return false
 }
 
-func (e *Error) Raise(cause error, response *jsonapi.ErrorObject) error {
+func (e *Error) Raise(cause error) error {
 	return &Error{
 		ID:    e.ID,
 		Cause: cause,
