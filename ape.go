@@ -14,14 +14,13 @@ type Error struct {
 }
 
 func (e *Error) Error() string {
-	return e.ID
-}
-
-func (e *Error) Unwrap() error {
-	if e.Cause != nil {
-		return e.Cause
+	if e == nil {
+		return "<nil>"
 	}
-	return nil
+	if e.Cause != nil {
+		return e.Cause.Error()
+	}
+	return e.ID
 }
 
 func (e *Error) Is(target error) bool {
@@ -43,12 +42,4 @@ func Declare(ID string) *Error {
 	return &Error{
 		ID: ID,
 	}
-}
-
-func Unwrap(err error) *Error {
-	var e *Error
-	if errors.As(err, &e) {
-		return e
-	}
-	return nil
 }
