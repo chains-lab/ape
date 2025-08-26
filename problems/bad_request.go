@@ -23,6 +23,7 @@ func BadRequest(err error) []*jsonapi.ErrorObject {
 			{
 				Title:  http.StatusText(http.StatusBadRequest),
 				Status: fmt.Sprintf("%d", http.StatusBadRequest),
+				Code:   "BAD_REQUEST",
 				Detail: "Request body were expected",
 				Meta: &map[string]any{
 					"timestamp": time.Now().UTC(),
@@ -41,6 +42,7 @@ func BadRequest(err error) []*jsonapi.ErrorObject {
 			{
 				Title:  http.StatusText(http.StatusBadRequest),
 				Status: fmt.Sprintf("%d", http.StatusBadRequest),
+				Code:   "BAD_REQUEST",
 				Detail: "Your request was invalid in some way",
 				Meta: &map[string]any{
 					"timestamp": time.Now().UTC(),
@@ -56,6 +58,7 @@ func toJsonapiErrors(m map[string]error) []*jsonapi.ErrorObject {
 		errs = append(errs, &jsonapi.ErrorObject{
 			Title:  http.StatusText(http.StatusBadRequest),
 			Status: fmt.Sprintf("%d", http.StatusBadRequest),
+			Code:   "BAD_REQUEST",
 			Meta: &map[string]interface{}{
 				"field":     key,
 				"error":     value.Error(),
@@ -64,4 +67,18 @@ func toJsonapiErrors(m map[string]error) []*jsonapi.ErrorObject {
 		})
 	}
 	return errs
+}
+
+func InvalidParameter(param string, reason error) *jsonapi.ErrorObject {
+	return &jsonapi.ErrorObject{
+		Title:  http.StatusText(http.StatusBadRequest),
+		Status: fmt.Sprintf("%d", http.StatusBadRequest),
+		Code:   "BAD_REQUEST",
+		Detail: fmt.Sprintf("Invalid parameter: %s", param),
+		Meta: &map[string]interface{}{
+			"param":     param,
+			"reason":    reason.Error(),
+			"timestamp": time.Now().UTC(),
+		},
+	}
 }

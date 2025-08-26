@@ -12,6 +12,7 @@ func Conflict(details string) *jsonapi.ErrorObject {
 	return &jsonapi.ErrorObject{
 		Title:  http.StatusText(http.StatusConflict),
 		Status: fmt.Sprintf("%d", http.StatusConflict),
+		Code:   "CONFLICT",
 		Detail: details,
 		Meta: &map[string]any{
 			"timestamp": time.Now().UTC(),

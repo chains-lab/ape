@@ -50,6 +50,7 @@ func NotAllowed(details string, errs ...error) *jsonapi.ErrorObject {
 		return &jsonapi.ErrorObject{
 			Title:  http.StatusText(http.StatusBadRequest),
 			Status: fmt.Sprintf("%d", http.StatusBadRequest),
+			Code:   "BAD_REQUEST",
 			Detail: details,
 			Meta: &map[string]interface{}{
 				"reason":    cause.Error(),
@@ -60,6 +61,7 @@ func NotAllowed(details string, errs ...error) *jsonapi.ErrorObject {
 		return &jsonapi.ErrorObject{
 			Title:  http.StatusText(http.StatusUnauthorized),
 			Status: fmt.Sprintf("%d", http.StatusUnauthorized),
+			Code:   "NOT_ALLOWED",
 			Detail: details,
 			Meta: &map[string]interface{}{
 				"timestamp": time.Now().UTC(),
@@ -70,6 +72,7 @@ func NotAllowed(details string, errs ...error) *jsonapi.ErrorObject {
 			return &jsonapi.ErrorObject{
 				Title:  http.StatusText(http.StatusForbidden),
 				Status: fmt.Sprintf("%d", http.StatusForbidden),
+				Code:   "FORBIDDEN",
 				Detail: details,
 				Meta: &map[string]interface{}{
 					"timestamp": time.Now().UTC(),
@@ -80,6 +83,7 @@ func NotAllowed(details string, errs ...error) *jsonapi.ErrorObject {
 		return &jsonapi.ErrorObject{
 			Title:  http.StatusText(http.StatusInternalServerError),
 			Status: fmt.Sprintf("%d", http.StatusInternalServerError),
+			Code:   "INTERNAL_SERVER_ERROR",
 			Detail: details,
 			Meta: &map[string]interface{}{
 				"timestamp": time.Now().UTC(),
