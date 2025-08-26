@@ -45,6 +45,7 @@ func (e *Error) Raise(cause error, response *jsonapi.ErrorObject) error {
 	}
 }
 
+// JSONAPIError returns the JSONAPI error object associated with this error.
 func (e *Error) JSONAPIError() *jsonapi.ErrorObject {
 	return e.Response
 }
