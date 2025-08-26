@@ -1,4 +1,4 @@
-module github.com/chains-lab/svc-errors
+module github.com/chains-lab/ape
 
 go 1.24.4
 
