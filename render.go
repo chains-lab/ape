@@ -17,8 +17,8 @@ func Render(w http.ResponseWriter, status int, res interface{}) {
 	w.WriteHeader(status)
 	err := json.NewEncoder(w).Encode(res)
 	if err != nil {
+		panic(fmt.Errorf("failed to render response %w", err))
 	}
-	panic(fmt.Errorf("failed to render response %w", err))
 }
 
 func RenderErr(w http.ResponseWriter, errs ...*jsonapi.ErrorObject) {
