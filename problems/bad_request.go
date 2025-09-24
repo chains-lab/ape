@@ -69,6 +69,7 @@ func toJsonapiErrors(m map[string]error) []*jsonapi.ErrorObject {
 	return errs
 }
 
+// InvalidParameter deprecated: use InvalidParameter or InvalidPointer instead
 func InvalidParameter(parameter string, reason error) *jsonapi.ErrorObject {
 	return &jsonapi.ErrorObject{
 		Title:  http.StatusText(http.StatusBadRequest),
@@ -83,6 +84,7 @@ func InvalidParameter(parameter string, reason error) *jsonapi.ErrorObject {
 	}
 }
 
+// InvalidPointer deprecated: use InvalidParameter or InvalidPointer instead
 func InvalidPointer(pointer string, reason error) *jsonapi.ErrorObject {
 	return &jsonapi.ErrorObject{
 		Title:  http.StatusText(http.StatusBadRequest),
